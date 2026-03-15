@@ -4,9 +4,8 @@ __include__:
   - ../../runtime.yml
   - ./dataloader.yml
   - ./optimizer.yml
-  
 
-output_dir: ./output/
+output_dir: ./output/exp2_high_lr/
 
 epoches: 120
 remap_mscoco_category: True
@@ -15,13 +14,13 @@ optimizer:
   type: AdamW
   params:
     - params: '^(?=.*backbone)(?!.*norm).*$'
-      lr: 0.00001
+      lr: 0.00002
     - params: '^(?=.*backbone)(?=.*norm).*$'
-      lr: 0.00001
+      lr: 0.00002
       weight_decay: 0.0
     - params: '^(?=.*(?:encoder|decoder|denoising_class_embed|enc_score_head|enc_bbox_head|dec_score_head|dec_bbox_head))(?=.*norm|bn).*$'
       weight_decay: 0.0
-  lr: 0.0001
+  lr: 0.0002
   betas: [0.9, 0.999]
   weight_decay: 0.0001
 
@@ -39,4 +38,3 @@ ema:
 find_unused_parameters: False
 sync_bn: False
 clip_max_norm: 0.1
-# Đay là bản base
