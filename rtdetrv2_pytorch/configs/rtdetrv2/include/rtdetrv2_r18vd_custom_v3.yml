@@ -1,14 +1,15 @@
 __include__:
   - ../rtdetrv2_r18vd_120e_coco.yml
-  - ../../dataset/customv3.yml
+  - ../../dataset/custom.yml
   - ../../runtime.yml
   - ./dataloader.yml
   - ./optimizer.yml
 
-output_dir: ./output/exp3_stronger_reg/
+output_dir: ./output/stronger_reg/
 
 epoches: 120
 remap_mscoco_category: True
+use_amp: True
 
 optimizer:
   type: AdamW

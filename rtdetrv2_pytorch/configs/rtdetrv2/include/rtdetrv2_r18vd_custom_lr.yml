@@ -5,10 +5,11 @@ __include__:
   - ./dataloader.yml
   - ./optimizer.yml
 
-output_dir: ./output/exp2_high_lr/
+output_dir: ./output/learning_rate/
 
 epoches: 120
 remap_mscoco_category: True
+use_amp: True
 
 optimizer:
   type: AdamW
