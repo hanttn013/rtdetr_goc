@@ -5,37 +5,37 @@ __include__:
   - ./dataloader.yml
   - ./optimizer.yml
 
-output_dir: ./output/learning_rate/
+output_dir: ./output/strong_aug/
 
 epoches: 120
 remap_mscoco_category: True
 use_amp: True
 
+train_dataloader:
+  dataset:
+    transforms:
+      - type: Mosaic
+        prob: 0.5
+      - type: Mixup
+        prob: 0.5
+      - type: RandomPhotometricDistort
+        brightness: 0.4
+        contrast: 0.4
+        saturation: 0.4
+        hue: 0.1
+      - type: RandomCrop
+        min_scale: 0.3
+      - type: RandomHorizontalFlip
+      - type: Resize
+        size: [640, 640]
+
 optimizer:
-  type: AdamW
-  params:
-    - params: '^(?=.*backbone)(?!.*norm).*$'
-      lr: 0.00002
-    - params: '^(?=.*backbone)(?=.*norm).*$'
-      lr: 0.00002
-      weight_decay: 0.0
-    - params: '^(?=.*(?:encoder|decoder|denoising_class_embed|enc_score_head|enc_bbox_head|dec_score_head|dec_bbox_head))(?=.*norm|bn).*$'
-      weight_decay: 0.0
-  lr: 0.0002
-  betas: [0.9, 0.999]
-  weight_decay: 0.0001
+  lr: 0.0001
+  weight_decay: 0.0005
 
 lr_scheduler:
   type: MultiStepLR
-  milestones: [54]
+  milestones: [80]
   gamma: 0.1
 
 use_ema: True
-ema:
-  type: ModelEMA
-  decay: 0.9999
-  warmups: 2000
-
-find_unused_parameters: False
-sync_bn: False
-clip_max_norm: 0.1
