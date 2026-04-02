@@ -1,0 +1,41 @@
+__include__:
+  - ../rtdetrv2_r18vd_120e_coco.yml
+  - ../../dataset/custom.yml
+  - ../../runtime.yml
+  - ./dataloader.yml
+  - ./optimizer.yml
+
+output_dir: ./output/strong_aug/
+
+epoches: 120
+remap_mscoco_category: True
+
+
+train_dataloader:
+  dataset:
+    transforms:
+      - type: Mosaic
+        prob: 0.5
+      - type: Mixup
+        prob: 0.5
+      - type: RandomPhotometricDistort
+        brightness: 0.4
+        contrast: 0.4
+        saturation: 0.4
+        hue: 0.1
+      - type: RandomCrop
+        min_scale: 0.3
+      - type: RandomHorizontalFlip
+      - type: Resize
+        size: [640, 640]
+
+optimizer:
+  lr: 0.0001
+  weight_decay: 0.0005
+
+lr_scheduler:
+  type: MultiStepLR
+  milestones: [80]
+  gamma: 0.1
+
+use_ema: True

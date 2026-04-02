@@ -4,13 +4,11 @@ __include__:
   - ../../runtime.yml
   - ./dataloader.yml
   - ./optimizer.yml
-  
 
-output_dir: ./output/baseline/
+output_dir: ./output/stronger_reg/
 
 epoches: 120
 remap_mscoco_category: True
-
 
 optimizer:
   type: AdamW
@@ -24,7 +22,7 @@ optimizer:
       weight_decay: 0.0
   lr: 0.0001
   betas: [0.9, 0.999]
-  weight_decay: 0.0001
+  weight_decay: 0.0005
 
 lr_scheduler:
   type: MultiStepLR
@@ -40,4 +38,14 @@ ema:
 find_unused_parameters: False
 sync_bn: False
 clip_max_norm: 0.1
-# Đay là bản base
+
+RTDETRCriterionv2:
+  weight_dict:
+    loss_vfl: 1
+    loss_bbox: 5
+    loss_giou: 2
+  losses: ['vfl', 'boxes']
+  alpha: 0.75
+  gamma: 2.0
+
+use_amp: True
