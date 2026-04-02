@@ -9,7 +9,7 @@ output_dir: ./output/strong_aug/
 
 epoches: 120
 remap_mscoco_category: True
-use_amp: True
+
 
 train_dataloader:
   dataset:
