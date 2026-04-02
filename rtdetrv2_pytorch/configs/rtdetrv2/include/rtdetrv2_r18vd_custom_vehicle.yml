@@ -10,7 +10,7 @@ output_dir: ./output/baseline/
 
 epoches: 120
 remap_mscoco_category: True
-use_amp: True
+
 
 optimizer:
   type: AdamW
